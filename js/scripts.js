@@ -23,32 +23,41 @@ function pigLatinConvertWord(word) {
   var letters_to_cut = "";
 
 
-  for (var i = 0; i <= (word.length + 1); i++) {
-    var letter = word.slice(0, 1);
-    //debugger;
-    console.log("letter = " + letter + ". i = " + i);
-    if ((letter === 'a') || letter === 'e' || letter === 'i' || letter === 'o' || letter === 'u') {
-      console.log("hi");
+  for (var i = 0; i < (word.length); i++) {
+    var letter = word.slice(i, i+1);
+    // check if the first letter is a vowel
+    //if ((letter === 'a') || letter === 'e' || letter === 'i' || letter === 'o' || letter === 'u') {
+    if ((letter.match(/[aeiou]/)) || (letter.match(/[y]/) && (letters_to_cut))) {
+      // if the letter is a 'u', check if previous letter was a q
       if (letter === "u"){
+        // if a 'u', take the u and q
         if (letters_to_cut[i-1] === "q") {
-          console.log("we are inside. letters_to_cut[i-1] = " + letters_to_cut[i-1]);
-          letters_to_cut += word.substr(0, 1);
+          letters_to_cut += word.substr(i, 1);
           word = word.slice(1,word.length);
         }
-      }
+      }// if not, treat as normal
+      word = word.slice(i,word.length);
       word += letters_to_cut;
       word += 'ay';
       return word;
     }
-    else {
-      letters_to_cut += word.substr(0, 1);
-      word = word.slice(1,word.length);
+    else { // if letter is a consonant, put letter into letters_to_cut and shorten word by that letter
+      letters_to_cut += word.substr(i, 1);
+
       console.log("letters_to_cut = " + letters_to_cut + ". word = " + word + ". letter = " + letter + " word length = " + word.length);
     }
-}
+  }
 
   return word;
 }
 $(document).ready(function(){
-  
-})
+  $("form#pigLatinConvert").submit(function(event){
+    var phrase = $("input#phrase").val();
+    var result = pigLatinConvert(phrase);
+    $("input#phrase").val('');
+
+    $(".pig_latin_words").text(result);
+    $(".pig_latin").show();
+    event.preventDefault();
+  });
+});

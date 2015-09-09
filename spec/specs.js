@@ -19,10 +19,23 @@ describe('pigLatinConvert', function() {
     expect(pigLatinConvert("under")).to.equal("underay");
   });
 
+  it("When the vowel is a \"u\", check for a \"q\" right before it: wrtquedf -> edfwrtquay", function(){
+    expect(pigLatinConvert("wrtquedf")).to.equal("edfwrtquay");
+  });
+
   it("Squeal -> ealsquay", function(){
     expect(pigLatinConvert("squeal")).to.equal("ealsquay");
   });
 
+  it("Test for \"y\" not being the first letter: style -> ylestay", function(){
+    expect(pigLatinConvert("style")).to.equal("ylestay");
+  });
+
+  it("Test for \"y\" being the first letter: year-> earyay", function(){
+    expect(pigLatinConvert("year")).to.equal("earyay");
+  });
+
+  //sentances
   it("Two words: The dog", function(){
     expect(pigLatinConvert("The dog")).to.equal("ethay ogday");
   });

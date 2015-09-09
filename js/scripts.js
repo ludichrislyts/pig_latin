@@ -1,38 +1,54 @@
-function findTriangle(side1, side2, side3) {
-  var triangleArray = [side1, side2, side3];
-  triangleArray.sort(function(a, b){return a-b});
-  var sum = triangleArray[0] + triangleArray[1];
-  if (sum < triangleArray[2]) {
-    return "not a triangle";
+function pigLatinConvert(phrase) {
+  phrase = phrase.toLowerCase();
+  var alphaPhrase = phrase.replace(/[^A-Za-z\s]/g, "");
+  console.log("phrase to lower with regex and keep spaces? " + alphaPhrase);
+  var array_of_converted_words = [];
+
+  if (phrase.match(/\s/)) {
+    console.log("it matched");
+    var array_of_words = phrase.split(" ");
+
+    for (var i = 0; i < array_of_words.length; i++) {
+      array_of_converted_words[i] = pigLatinConvertWord(array_of_words[i]);
+    }
+    phrase = array_of_converted_words.join(" ");
+  }
+  else {
+    phrase = pigLatinConvertWord(phrase);
+  }
+  return phrase;
+}
+
+function pigLatinConvertWord(word) {
+  var letters_to_cut = "";
+
+
+  for (var i = 0; i <= (word.length + 1); i++) {
+    var letter = word.slice(0, 1);
+    //debugger;
+    console.log("letter = " + letter + ". i = " + i);
+    if ((letter === 'a') || letter === 'e' || letter === 'i' || letter === 'o' || letter === 'u') {
+      console.log("hi");
+      if (letter === "u"){
+        if (letters_to_cut[i-1] === "q") {
+          console.log("we are inside. letters_to_cut[i-1] = " + letters_to_cut[i-1]);
+          letters_to_cut += word.substr(0, 1);
+          word = word.slice(1,word.length);
+        }
+      }
+      word += letters_to_cut;
+      word += 'ay';
+      return word;
     }
     else {
-      if ((side1 == side2) && (side2 == side3)) {
-        return "an equilateral";
-      }
-      else if ((side1 == side2) || (side2 == side3)) {
-        return "an isosceles";
-      }
-      else {
-        return "a scalene";
+      letters_to_cut += word.substr(0, 1);
+      word = word.slice(1,word.length);
+      console.log("letters_to_cut = " + letters_to_cut + ". word = " + word + ". letter = " + letter + " word length = " + word.length);
     }
-  }
-};
+}
 
-$(document).ready(function() {
-
-  $("form#triangle").submit(function(event) {
-    var side1 = parseInt($("input#side1").val());
-    var side2 = parseInt($("input#side2").val());
-    var side3 = parseInt($("input#side3").val());
-    var sides = side1 + ", " + side2 + ", " + side3;
-    var triangle = findTriangle(side1, side2, side3);
-    $(".allSides").empty();
-    $(".allSides").text(sides);
-
-    $(".result").empty();
-    $(".result").text(triangle);
-
-    $(".triangles").show();
-    event.preventDefault();
-  });
-});
+  return word;
+}
+$(document).ready(function(){
+  
+})

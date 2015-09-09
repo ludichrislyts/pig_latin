@@ -2,7 +2,7 @@
 
 ##### Pig Latin Converter, 9/9/2015
 
-#### By Kenny Grage
+#### By Kenny Grage and Chris Lytsell
 
 ## Description
 
@@ -21,7 +21,7 @@ HTML/CSS, Javascript, jQuery, Mocha, Chai, Bootstrap
 ### Legal
 
 
-Copyright (c) 2015 Kenny Grage
+Copyright (c) 2015 Kenny Grage and Chris Lytsell
 
 This software is licensed under the MIT license.
 
